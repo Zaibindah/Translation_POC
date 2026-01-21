@@ -1,0 +1,18 @@
+You are an expert in classical Arabic ethics and Islamic moral philosophy.
+
+Analyze the Arabic text below. Your job is to extract:
+
+1. ONE dominant ethical VALUE for the ENTIRE text.  
+   - Must be a single Arabic keyword.  
+2. SUB-VALUES: supporting ethical principles.  
+
+STRICT RULES:
+- Output ONLY valid JSON.
+- JSON must have EXACTLY two fields: "value" and "sub_values".
+- "value": ONE Arabic keyword.
+- "sub_values": a list of Arabic keywords.
+- Do NOT write explanations, commentary, markdown, or extra text.
+- Do not return "غير_محدد" unless truly no value exists.
+
+Text:
+{{TEXT}}
