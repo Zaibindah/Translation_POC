@@ -1,41 +1,49 @@
-# llm/llm_client.py
-
 import os
-from dotenv import load_dotenv
+import re
 import google.generativeai as genai
+from dotenv import load_dotenv
 
-# Load environment variables
+# Load .env
 load_dotenv()
 
-API_KEY = os.getenv("GEMINI_API_KEY")
-if not API_KEY:
-    raise ValueError("GEMINI_API_KEY not found in environment")
+# Read API key
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# Configure Gemini
-genai.configure(api_key=API_KEY)
+if not GEMINI_API_KEY:
+    raise ValueError("❌ GEMINI_API_KEY not found in .env")
 
-# Initialize model
+# Configure Gemini (OLD SDK)
+genai.configure(api_key=GEMINI_API_KEY)
+
+# Load model
 model = genai.GenerativeModel(
-    model_name="models/gemini-2.5-flash"
+    model_name="models/gemini-2.5-flash-lite-preview-09-2025"
 )
 
-
-def call_llm(prompt: str, temperature: float = 0.2) -> str:
+def clean_markdown_json(text: str) -> str:
     """
-    Calls Gemini 2.5 Flash with strict text output.
+    Remove markdown ```json ``` wrappers
     """
+    lines = text.strip().splitlines()
+    lines = [
+        line for line in lines
+        if not re.match(r'^```(?:json)?$', line.strip(), re.IGNORECASE)
+    ]
+    return "\n".join(lines).strip()
 
-    generation_config = genai.types.GenerationConfig(
-        temperature=0.0,
-        top_p=0.9,
-        max_output_tokens=512
-    )
+
+def call_gemini(prompt: str) -> str:
+    """
+    Calls Gemini Flash and returns raw text output
+    """
 
     response = model.generate_content(
         prompt,
-        generation_config=generation_config
+        generation_config={
+            "temperature": 0.0,
+            "top_p": 0.9,
+            "max_output_tokens": 2048
+        }
     )
-    print("HI")
-    print(response)
-    # Gemini may return multiple parts — we want plain text
-    return response.text.strip()
+
+    return clean_markdown_json(response.text)

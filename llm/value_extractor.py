@@ -2,7 +2,7 @@
 
 import json
 import re
-from llm.llm_client import call_llm
+from llm import call_gemini
 
 
 def _clean_json(text: str) -> str:
@@ -19,7 +19,7 @@ def extract_value(arabic_text: str) -> dict:
 
     prompt = prompt_template.replace("{{TEXT}}", arabic_text)
 
-    response = call_llm(prompt, temperature = 0.2)
+    response = call_gemini(prompt)
     response = _clean_json(response)
 
     try:

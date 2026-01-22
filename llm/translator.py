@@ -1,4 +1,4 @@
-from llm.llm_client import call_llm
+from llm import call_gemini
 
 def translate_text(arabic_text: str) -> str:
     with open("prompts/translation_prompt.txt", encoding="utf-8") as f:
@@ -6,9 +6,8 @@ def translate_text(arabic_text: str) -> str:
 
     prompt = prompt_template.replace("{{TEXT}}", arabic_text)
 
-    response = call_llm(
-        prompt=prompt,
-        temperature=0.3
+    response = call_gemini(
+        prompt=prompt
     )
 
     return response.strip()

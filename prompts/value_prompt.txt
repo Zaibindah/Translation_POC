@@ -1,18 +1,58 @@
-You are an expert in classical Arabic ethics and Islamic moral philosophy.
+You are an expert in classical Arabic and Islamic ethical analysis.
 
-Analyze the Arabic text below. Your job is to extract:
+Analyze the following Arabic text (it could be a Qur’anic verse, Hadith, or historical narrative).
 
-1. ONE dominant ethical VALUE for the ENTIRE text.  
-   - Must be a single Arabic keyword.  
-2. SUB-VALUES: supporting ethical principles.  
+Your tasks:
 
-STRICT RULES:
-- Output ONLY valid JSON.
-- JSON must have EXACTLY two fields: "value" and "sub_values".
-- "value": ONE Arabic keyword.
-- "sub_values": a list of Arabic keywords.
-- Do NOT write explanations, commentary, markdown, or extra text.
-- Do not return "غير_محدد" unless truly no value exists.
+Before choosing the value:
+- Infer the intent of the speaker or narrative.
+- Ask yourself: "What moral purpose is this text demonstrating?"
+- Then select the value that best matches that intent.
+
+1. Identify the SINGLE dominant ethical VALUE.
+
+Before selecting the value, consider the intent of the narrative or speaker.
+Ask yourself: “What moral purpose is this text ultimately demonstrating?”
+
+Choose the value that best explains WHY the action, event, or story is presented,
+not merely WHAT happens on the surface.
+
+Ethical intent may be expressed either explicitly or implicitly.
+Some texts convey moral meaning through:
+- Divine correction or rebuke
+- Revelation concerning a specific person
+- Rhetorical emphasis rather than direct commands
+
+In such cases, infer the ethical value from the purpose of the correction,
+the reason for the revelation, or the moral contrast being highlighted.
+
+If themes such as leadership, authority, or choice appear,
+determine whether the intent relates primarily to:
+- Establishing fairness and rights for others (العدل)
+- Avoiding power for self-purification and humility (الزهد)
+- Accepting responsibility despite reluctance (الأمانة)
+
+Select one concise Arabic keyword that best represents this central moral intent.
+
+
+2. Identify the SUB-VALUES:
+- These must explain the ethical lesson demonstrated by the narrative.
+- They may be inferred from consequences, divine response, or moral contrast.
+- Do not require explicit moral vocabulary in the text.
+
+3. Abstract meaning:
+   - Do not repeat words from the text unless they truly represent ethical abstraction.
+   - Focus on meaning, not literal phrasing.
+
+4. Output rules (STRICT):
+   - Output ONLY JSON.
+   - Use ONLY these fields:
+     - "value": string
+     - "sub_values": list of strings
+   - Do NOT include explanations, evidence, or extra text.
+   - Do NOT output multiple dominant values.
 
 Text:
 {{TEXT}}
+
+Output JSON:

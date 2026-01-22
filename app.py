@@ -1,6 +1,6 @@
 import streamlit as st
-from llm.value_extractor import extract_value
-from llm.translator import translate_text
+from llm import extract_value, translate_values, translate_text
+
 
 st.set_page_config(
     page_title="Arabic Ethical Value Analyzer",
@@ -20,11 +20,22 @@ if st.button("Analyze"):
         st.error("Please enter Arabic text.")
     else:
         with st.spinner("Analyzing..."):
+            # 1️⃣ Extract ethical value (Arabic)
             value_result = extract_value(arabic_text)
+
+            # 2️⃣ Translate full Arabic text (existing behavior)
             translation = translate_text(arabic_text)
 
-        st.subheader("Dominant Ethical Value")
+            # 3️⃣ Translate extracted values + sub-values (NEW)
+            translated_values = translate_values(value_result)
+
+        # ----------- OUTPUT SECTIONS -----------
+
+        st.subheader("🧭 Dominant Ethical Value (Arabic)")
         st.json(value_result)
 
-        st.subheader("English Translation")
+        st.subheader("🌍 Dominant Ethical Value (English)")
+        st.json(translated_values)
+
+        st.subheader("📖 English Translation of Input Text")
         st.write(translation)
